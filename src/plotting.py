@@ -265,32 +265,6 @@ def plot_kmeans(result_kmeans, spindle_metrics, K):
 
 
 
-### ------- compare ERPs between spindle vs no_spindles trials --------- ###
-
-def compare_erp_ind(epochs, spindle_index, picks):  
-
-        rng = np.random.default_rng()
-
-        n_rows = int(np.ceil(len(epochs)/ 2))
-        fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))
-        axes = axes.flatten()
-
-        for i, subj in enumerate(epochs.keys()):
-            epoch = epochs[subj]
-            spindles, ns_in_spindles, no_spindles = spindle_index[subj]["spindles"], spindle_index[subj]["ns_in_spindles"], spindle_index[subj]["valid_no_spindles"]
-
-
-            evokeds = {"spindle" : epoch[spindles].average(),
-                        "no_spindle" : epoch[no_spindles].average(),
-                        "no_sp_in_sp" : epoch[ns_in_spindles].average()}
-
-            colors = plt.cm.viridis(np.linspace(0, 1, 3))
-            colors = [tuple(c) for c in colors]
-
-            mne.viz.plot_compare_evokeds(evokeds, picks, axes=axes[i], combine="mean", colors=colors, legend=True, title= f"Comparison sp vs no_sp vs no_sp_in_sp - {subj}", show=False)
-
-
-
 ### plot the results of window sliding with information about spindles
 
 def plot_sp_ratio_window(spindle_window, spindle_index):
@@ -536,3 +510,29 @@ def plot_freq_maxval_sp(spindle_metrics, spindle_index, method, freqs, mask_spin
 
 #     plt.tight_layout()
 #     plt.show()
+
+
+
+### ------- compare ERPs between spindle vs no_spindles trials --------- ###
+
+# def compare_erp_ind(epochs, spindle_index, picks):  
+
+#         rng = np.random.default_rng()
+
+#         n_rows = int(np.ceil(len(epochs)/ 2))
+#         fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))
+#         axes = axes.flatten()
+
+#         for i, subj in enumerate(epochs.keys()):
+#             epoch = epochs[subj]
+#             spindles, ns_in_spindles, no_spindles = spindle_index[subj]["spindles"], spindle_index[subj]["ns_in_spindles"], spindle_index[subj]["valid_no_spindles"]
+
+
+#             evokeds = {"spindle" : epoch[spindles].average(),
+#                         "no_spindle" : epoch[no_spindles].average(),
+#                         "no_sp_in_sp" : epoch[ns_in_spindles].average()}
+
+#             colors = plt.cm.viridis(np.linspace(0, 1, 3))
+#             colors = [tuple(c) for c in colors]
+
+#             mne.viz.plot_compare_evokeds(evokeds, picks, axes=axes[i], combine="mean", colors=colors, legend=True, title= f"Comparison sp vs no_sp vs no_sp_in_sp - {subj}", show=False)
