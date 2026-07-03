@@ -1,0 +1,19 @@
+# Data
+data/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# tfr_result files in .pkl
+tfr_results/
+
+# scripts
+scripts/
+
+# notebooks
+notebooks/analysis_mne_apice.ipynb
+notebooks/analysis_mne_mat.ipynb
