@@ -39,16 +39,15 @@ def plot_delta(spindle_metrics):
 
 
 # ---------- for a topomap of delta values. Useful for selecting ROIs for trial classification based on spindle/no spindle----------- #
+# ---------- individual plots ----------- #
 
 def plot_topo_delta(spindle_metrics, info):
 
     subjects = list(spindle_metrics.keys())
     n = len(subjects)
 
-    # make sure delta aligns with subjects
     delta = [spindle_metrics[subj]["delta"] for subj in subjects]
 
-    # robust grid
     n_rows = int(np.ceil(n / 2))
     fig, axes = plt.subplots(n_rows, 2, figsize=(12, 4 * n_rows))
     axes = axes.flatten()
@@ -76,7 +75,6 @@ def plot_topo_delta(spindle_metrics, info):
 
         axes[i].set_title(subj)
 
-    # remove empty axes if odd number (to revise)
     for j in range(i + 1, len(axes)):
         fig.delaxes(axes[j])
 
@@ -138,7 +136,6 @@ def plot_fit(spindle_metrics, freqs, spindle_index, spindle_start, spindle_end):
         signal, fit = spindle_metrics[subj]["log_psd"], spindle_metrics[subj]["fit"]
         spindles, no_spindles_in_spindles, valid_no_spindles = spindle_index[subj]["spindles"], spindle_index[subj]["ns_in_spindles"], spindle_index[subj]["valid_no_spindles"] 
 
-        # compute the 3 conditions
         signal_all = signal.mean(axis=(0,1))
         signal_sp  = signal[spindles].mean(axis=(0,1))
         signal_ns  = signal[no_spindles_in_spindles].mean(axis=(0,1))
@@ -168,7 +165,6 @@ def plot_fit(spindle_metrics, freqs, spindle_index, spindle_start, spindle_end):
             if i == 0 and j == 0:
                 ax.legend()
 
-            # spindle region delimitation
             ymin, ymax = ax.get_ylim() 
             ax.vlines(spindle_start, ymin=ymin, ymax=ymax, color = "r", linestyles='dashed', label = 'Spindle Band')
             ax.vlines(spindle_end, ymin=ymin, ymax=ymax, color = "r", linestyles='dashed')

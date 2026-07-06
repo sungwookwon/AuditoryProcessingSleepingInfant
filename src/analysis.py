@@ -59,7 +59,7 @@ def compute_spindle_metric(psd, log_freqs, mask_fit, mask_spindle, *, axis):
         residual[:, :, mask_spindle],
         log_freqs[mask_spindle],
         axis=2
-        ).mean(axis=axis)
+        ).mean(axis=axis) # change this axis to 1 if to average over channels and to 0 over trials.
 
 
     return log_psd, background_fit, residual, spindle_area, coef_mat 
@@ -172,10 +172,6 @@ def prep_permute_and_erp_optim(list_s, list_ns, list_ns_in_s, picks):
 
     X = [X_spindle, X_no_spindle, X_ns]
             
-    
-    # dict_ns = {"no_spindle" : mne.grand_average(list_ns)}
-    # dict_s = {"spindle" : mne.grand_average(list_s)}
-
     evokeds = {
                     "spindle": list_s,
                     "no_spindle": list_ns,
